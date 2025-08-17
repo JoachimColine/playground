@@ -12,7 +12,7 @@ set(CMAKE_AUTOUIC ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 
-add_executable(${PROJECT_NAME}
+qt_add_executable(${PROJECT_NAME}
     resources/resources.qrc
     src/main.cpp
     src/mainwindow.cpp
