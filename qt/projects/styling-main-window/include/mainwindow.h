@@ -22,6 +22,10 @@ private:
 
 private slots:
     void onLoadStyleSheetActionTriggered();
+    void onPopInfoActionTriggered();
+    void onPopWarningActionTriggered();
+    void onPopCriticalActionTriggered();
+
 
 private:
     QWidget* buildCentralWidget();

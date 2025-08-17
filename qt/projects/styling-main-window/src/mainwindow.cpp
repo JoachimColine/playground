@@ -25,6 +25,7 @@
 #include <QDockWidget>
 #include <QCalendarWidget>
 #include <QFileDialog>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -79,6 +80,10 @@ void MainWindow::addToolbar()
     toolbar->addAction("Cut");
     toolbar->addAction("Copy");
     toolbar->addAction("Paste");
+    toolbar->addSeparator();
+    toolbar->addAction("Pop info", this, &MainWindow::onPopInfoActionTriggered);
+    toolbar->addAction("Pop warning", this, &MainWindow::onPopWarningActionTriggered);
+    toolbar->addAction("Pop critical", this, &MainWindow::onPopCriticalActionTriggered);
 }
 
 void MainWindow::addDockWidgets()
@@ -195,4 +200,28 @@ void MainWindow::onLoadStyleSheetActionTriggered()
         styleFile.open(QFile::ReadOnly);
         setStyleSheet(QLatin1String(styleFile.readAll()));
     }
+}
+
+void MainWindow::onPopInfoActionTriggered()
+{
+    QMessageBox msgBox;
+    msgBox.setText("Some information.");
+    msgBox.setIcon(QMessageBox::Information);
+    msgBox.exec();
+}
+
+void MainWindow::onPopWarningActionTriggered()
+{
+    QMessageBox msgBox;
+    msgBox.setText("Some warning.");
+    msgBox.setIcon(QMessageBox::Warning);
+    msgBox.exec();
+}
+
+void MainWindow::onPopCriticalActionTriggered()
+{
+    QMessageBox msgBox;
+    msgBox.setText("Something critical.");
+    msgBox.setIcon(QMessageBox::Critical);
+    msgBox.exec();
 }
