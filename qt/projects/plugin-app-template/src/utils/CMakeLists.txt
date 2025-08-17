@@ -1,0 +1,1 @@
+# Pure helpers (stateless functions, formatting, etc.)
