@@ -24,6 +24,7 @@
 #include <QToolBar>
 #include <QDockWidget>
 #include <QCalendarWidget>
+#include <QFileDialog>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -33,7 +34,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::setStyleSheet(QString styleSheet)
 {
-    qApp->setStyleSheet(styleSheet);
+    if (!styleSheet.isEmpty())
+        qApp->setStyleSheet(styleSheet);
 }
 
 void MainWindow::buildMainWindow()
@@ -54,7 +56,7 @@ void MainWindow::addMenubar()
 {
     QMenu *fileMenu = menuBar()->addMenu("File");
     fileMenu->addAction("New");
-    fileMenu->addAction("Open");
+    fileMenu->addAction("Load a stylesheet...", this, &MainWindow::onLoadStyleSheetActionTriggered);
     fileMenu->addSeparator();
     fileMenu->addAction("Exit", this, &QMainWindow::close);
 
@@ -183,4 +185,14 @@ QWidget* MainWindow::buildCentralWidget()
     rightLayout->addWidget(listWidget);
 
     return central;
+}
+
+void MainWindow::onLoadStyleSheetActionTriggered()
+{
+    QFile styleFile(QFileDialog::getOpenFileName(this, "Open File", "", "QSS Files (*.qss)"));
+    if (styleFile.exists())
+    {
+        styleFile.open(QFile::ReadOnly);
+        setStyleSheet(QLatin1String(styleFile.readAll()));
+    }
 }

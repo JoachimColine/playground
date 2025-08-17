@@ -20,6 +20,9 @@ private:
     void addToolbar();
     void addDockWidgets();
 
+private slots:
+    void onLoadStyleSheetActionTriggered();
+
 private:
     QWidget* buildCentralWidget();
 };
