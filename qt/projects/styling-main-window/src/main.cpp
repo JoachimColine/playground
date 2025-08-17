@@ -12,8 +12,8 @@ QString loadStyleSheet()
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    app.setStyleSheet(loadStyleSheet());
     MainWindow window;
+    window.setStyleSheet(loadStyleSheet());
     window.show();
     return app.exec();
 }

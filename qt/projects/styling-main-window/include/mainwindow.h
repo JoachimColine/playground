@@ -9,6 +9,8 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
 
+    void setStyleSheet(QString styleSheet);
+
 private:
     void buildMainWindow();
 

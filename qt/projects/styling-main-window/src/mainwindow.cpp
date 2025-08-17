@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include <QApplication>
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -28,6 +29,11 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
     buildMainWindow();
+}
+
+void MainWindow::setStyleSheet(QString styleSheet)
+{
+    qApp->setStyleSheet(styleSheet);
 }
 
 void MainWindow::buildMainWindow()
