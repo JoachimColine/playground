@@ -1,1 +1,1 @@
-# plugins directory for defining plugin manager, interfaces and implementations
+# plugins
