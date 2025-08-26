@@ -12,4 +12,5 @@ set(CMAKE_AUTOUIC ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 
+add_subdirectory(resources)
 add_subdirectory(src)
