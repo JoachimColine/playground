@@ -1,9 +1,11 @@
-#include "logger.h"
+#include "Logger.h"
 #include <QApplication>
 #include <QThread>
 #include <QFileInfo>
 #include <QDebug>
 #include <iostream>
+
+using namespace JApp;
 
 Logger* Logger::s_instance = nullptr;
 
@@ -29,35 +31,37 @@ Logger& Logger::instance()
 
 void Logger::initialize(const LogConfig& config)
 {
-    QMutexLocker locker(&m_mutex);
-    
-    m_config = config;
-    
-    // Set default log directory if not specified
-    if (m_config.logDirectory.isEmpty()) {
-        m_config.logDirectory = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/logs";
-    }
-    
-    ensureLogDirectory();
-    
-    // Setup file logging if enabled
-    if (m_config.target & OutputTarget::File) {
-        m_logFile = std::make_unique<QFile>(getCurrentLogFileName());
-        if (m_logFile->open(QIODevice::WriteOnly | QIODevice::Append)) {
-            m_logStream = std::make_unique<QTextStream>(m_logFile.get());
-            m_logStream->setEncoding(QStringConverter::Utf8);
-        } else {
-            qWarning() << "Failed to open log file:" << m_logFile->fileName();
+    {
+        QMutexLocker locker(&m_mutex);
+
+        m_config = config;
+
+        // Set default log directory if not specified
+        if (m_config.logDirectory.isEmpty()) {
+            m_config.logDirectory = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/logs";
         }
-    }
-    
-    // Setup Qt message handler
-    setupMessageHandler();
-    
-    // Start flush timer if auto-flush is enabled
-    if (m_config.autoFlush && m_config.flushIntervalMs > 0) {
-        m_flushTimer->start(m_config.flushIntervalMs);
-    }
+
+        ensureLogDirectory();
+
+        // Setup file logging if enabled
+        if (hasFlag(m_config.target, OutputTarget::File)) {
+            m_logFile = std::make_unique<QFile>(getCurrentLogFileName());
+            if (m_logFile->open(QIODevice::WriteOnly | QIODevice::Append)) {
+                m_logStream = std::make_unique<QTextStream>(m_logFile.get());
+                m_logStream->setEncoding(QStringConverter::Utf8);
+            } else {
+                qWarning() << "Failed to open log file:" << m_logFile->fileName();
+            }
+        }
+
+        // Setup Qt message handler
+        setupMessageHandler();
+
+        // Start flush timer if auto-flush is enabled
+        if (m_config.autoFlush && m_config.flushIntervalMs > 0) {
+            m_flushTimer->start(m_config.flushIntervalMs);
+        }
+    } // release mutex.
     
     // Log initialization
     log(LogLevel::Info, QLoggingCategory("logger"), 
@@ -122,7 +126,7 @@ void Logger::log(LogLevel level, const QLoggingCategory& category,
     QString formattedMessage = formatLogMessage(level, category, message, function, line, file);
     
     // Console output
-    if (m_config.target & OutputTarget::Console) {
+    if (hasFlag(m_config.target, OutputTarget::Console)) {
         if (level >= LogLevel::Critical) {
             std::cerr << formattedMessage.toStdString() << std::endl;
         } else {
@@ -131,7 +135,7 @@ void Logger::log(LogLevel level, const QLoggingCategory& category,
     }
     
     // File output
-    if ((m_config.target & OutputTarget::File) && m_logStream) {
+    if (hasFlag(m_config.target, OutputTarget::File) && m_logStream) {
         // Check file size and rotate if necessary
         if (m_logFile->size() > m_config.maxFileSize) {
             rotateLogFile();
@@ -236,7 +240,7 @@ QString Logger::formatLogMessage(LogLevel level, const QLoggingCategory& categor
     parts << QString("[%1]").arg(levelToString(level));
     
     // Category
-    if (m_config.enableCategory && !category.categoryName().isEmpty()) {
+    if (m_config.enableCategory && category.categoryName() != nullptr) {
         parts << QString("[%1]").arg(category.categoryName());
     }
     

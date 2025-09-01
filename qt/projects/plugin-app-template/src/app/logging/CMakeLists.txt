@@ -4,14 +4,14 @@ add_library(logging STATIC
     Logger.cpp
 )
 
-target_link_libraries(logging 
-    PUBLIC Qt6::Core
+target_link_libraries(logging PUBLIC
+    Qt6::Core
+    Qt6::Widgets
 )
 
 # for including "logging/Log.h"
-target_include_directories(logging 
-    PUBLIC 
-        ${CMAKE_CURRENT_SOURCE_DIR}/..
+target_include_directories(logging PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/..
 )
 
 set_target_properties(logging PROPERTIES
@@ -19,4 +19,4 @@ set_target_properties(logging PROPERTIES
 )
 
 # Create a convenient alias for linking
-add_library(internal::logging ALIAS logging)
+add_library(JApp::Logging ALIAS logging)

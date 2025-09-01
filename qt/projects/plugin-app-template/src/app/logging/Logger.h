@@ -11,6 +11,8 @@
 #include <QTimer>
 #include <memory>
 
+namespace JApp {
+
 class Logger : public QObject
 {
     Q_OBJECT
@@ -31,6 +33,7 @@ public:
     };
 
     struct LogConfig {
+        LogConfig(){}
         LogLevel minLevel     = LogLevel::Debug;
         OutputTarget target   = OutputTarget::Both;
         QString logDirectory;
@@ -86,3 +89,8 @@ private:
     static Logger* s_instance;
 };
 
+inline bool hasFlag(Logger::OutputTarget target, Logger::OutputTarget flag) {
+    return (static_cast<int>(target) & static_cast<int>(flag)) != 0;
+}
+
+}
