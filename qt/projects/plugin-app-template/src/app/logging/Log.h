@@ -3,21 +3,20 @@
 #include <QLoggingCategory>
 #include <QDebug>
 
-#define FILE_CATEGORY_NAME() \
-    []() { \
-        static QByteArray nameBytes; \
-        if (nameBytes.isEmpty()) { \
-            QString file = __FILE__; \
-            QString name = file.section('/', -1).section('.', 0, 0); \
-            name = QString("app.%1").arg(name.toLower()); \
-            nameBytes = name.toLatin1(); \
-        } \
-        return nameBytes.constData(); \
-    }()
+constexpr const char* categoryNameFromPath(const char* path) {
+    const char* file = path;
+    for (const char* p = path; *p; ++p) {
+        if (*p == '/' || *p == '\\') {
+            file = p + 1;
+        }
+    }
+    return file;
+}
 
 #define CURRENT_LOG_CATEGORY() \
     []() -> const QLoggingCategory& { \
-        static QLoggingCategory category(FILE_CATEGORY_NAME()); \
+        constexpr auto categoryName = categoryNameFromPath(__FILE__); \
+        static const QLoggingCategory category(categoryName); \
         return category; \
     }()
 
