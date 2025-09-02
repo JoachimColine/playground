@@ -5,13 +5,14 @@
 
 #define FILE_CATEGORY_NAME() \
     []() { \
-        static QString name; \
-        if (name.isEmpty()) { \
+        static QByteArray nameBytes; \
+        if (nameBytes.isEmpty()) { \
             QString file = __FILE__; \
-            name = file.section('/', -1).section('.', 0, 0); \
+            QString name = file.section('/', -1).section('.', 0, 0); \
             name = QString("app.%1").arg(name.toLower()); \
+            nameBytes = name.toLatin1(); \
         } \
-        return name.toLatin1().constData(); \
+        return nameBytes.constData(); \
     }()
 
 #define CURRENT_LOG_CATEGORY() \
