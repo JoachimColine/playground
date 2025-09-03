@@ -1,4 +1,4 @@
-#include "Logger.h"
+#include "JApp/Logger.h"
 #include <QApplication>
 #include <QThread>
 #include <QFileInfo>
@@ -61,7 +61,7 @@ void Logger::initialize(const LogConfig& config)
         if (m_config.autoFlush && m_config.flushIntervalMs > 0) {
             m_flushTimer->start(m_config.flushIntervalMs);
         }
-    } // release mutex.
+    } // Release mutex.
     
     // Log initialization
     log(LogLevel::Info, QLoggingCategory("logger"), 

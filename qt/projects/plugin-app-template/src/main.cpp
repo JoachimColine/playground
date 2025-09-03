@@ -1,7 +1,8 @@
 #include <QApplication>
 #include <QDebug>
-#include <logging/Logger.h>
-#include <logging/Log.h>
+#include <JApp/Logger.h>
+#include <JApp/Log.h>
+
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);

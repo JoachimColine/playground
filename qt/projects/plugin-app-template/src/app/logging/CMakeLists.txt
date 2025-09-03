@@ -1,7 +1,7 @@
 add_library(logging STATIC
-    Log.h
-    Logger.h
-    Logger.cpp
+    include/JApp/Log.h
+    include/JApp/Logger.h
+    src/Logger.cpp
 )
 
 target_link_libraries(logging PUBLIC
@@ -11,7 +11,7 @@ target_link_libraries(logging PUBLIC
 
 # for including "logging/Log.h"
 target_include_directories(logging PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}/..
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
 set_target_properties(logging PROPERTIES
