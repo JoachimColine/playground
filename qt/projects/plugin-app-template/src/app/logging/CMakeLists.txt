@@ -10,8 +10,11 @@ target_link_libraries(logging PUBLIC
 )
 
 # for including "logging/Log.h"
-target_include_directories(logging PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}/include
+target_include_directories(logging
+    PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+    INTERFACE
+        ${CMAKE_CURRENT_SOURCE_DIR}/internal
 )
 
 set_target_properties(logging PROPERTIES
