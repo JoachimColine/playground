@@ -67,12 +67,8 @@ private:
     
     void setupMessageHandler();
     void rotateLogFile();
-    QString formatLogMessage(LogLevel level, const QLoggingCategory& category,
-                           const QString& message, const QString& function,
-                           int line, const QString& file);
-    void log(LogLevel level, const QLoggingCategory& category, 
-             const QString& message, const QString& function = QString(), 
-             int line = -1, const QString& file = QString());
+    QString formatLogMessage(LogLevel level, const QLoggingCategory& category, const QString& message, const QString& function, int line, const QString& file);
+    void log(LogLevel level, const QLoggingCategory& category, const QString& message, const QString& function = QString(), int line = -1, const QString& file = QString());
     QString levelToString(LogLevel level);
     QString getCurrentLogFileName();
     void ensureLogDirectory();
@@ -81,6 +77,7 @@ private:
     static LogLevel qtMsgTypeToLogLevel(QtMsgType type);
 
 private:
+    bool m_initialized = false;
     LogConfig m_config;
     std::unique_ptr<QFile> m_logFile;
     std::unique_ptr<QTextStream> m_logStream;

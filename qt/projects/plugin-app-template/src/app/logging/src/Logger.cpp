@@ -3,6 +3,7 @@
 #include <QThread>
 #include <QFileInfo>
 #include <QDebug>
+#include <JApp/Log.h>
 #include <iostream>
 
 using namespace JApp;
@@ -31,6 +32,7 @@ Logger& Logger::instance()
 
 void Logger::initialize(const LogConfig& config)
 {
+    if (m_initialized) return;
     {
         QMutexLocker locker(&m_mutex);
 
@@ -62,17 +64,19 @@ void Logger::initialize(const LogConfig& config)
             m_flushTimer->start(m_config.flushIntervalMs);
         }
     } // Release mutex.
-    
-    // Log initialization
-    log(LogLevel::Info, QLoggingCategory("logger"), 
-        QString("Logger initialized - Target: %1, Level: %2, Directory: %3")
-        .arg(static_cast<int>(m_config.target))
-        .arg(static_cast<int>(m_config.minLevel))
-        .arg(m_config.logDirectory));
+
+    m_initialized = true;
+
+    LOG_INFO() << QString("Logger initialized - Target: %1, Level: %2, Directory: %3")
+                  .arg(static_cast<int>(m_config.target))
+                  .arg(static_cast<int>(m_config.minLevel))
+                  .arg(m_config.logDirectory);
 }
 
 void Logger::shutdown()
 {
+    if (!m_initialized) return;
+
     QMutexLocker locker(&m_mutex);
     
     if (m_flushTimer->isActive()) {
@@ -112,10 +116,10 @@ void Logger::setLogDirectory(const QString& directory)
     ensureLogDirectory();
 }
 
-void Logger::log(LogLevel level, const QLoggingCategory& category, 
-                const QString& message, const QString& function, 
-                int line, const QString& file)
+void Logger::log(LogLevel level, const QLoggingCategory& category, const QString& message, const QString& function, int line, const QString& file)
 {
+    if (!m_initialized) return;
+
     // Check if we should log this level
     if (level < m_config.minLevel) {
         return;
@@ -151,6 +155,8 @@ void Logger::log(LogLevel level, const QLoggingCategory& category,
 
 void Logger::flushLogs()
 {
+    if (!m_initialized) return;
+
     QMutexLocker locker(&m_mutex);
     if (m_logStream) {
         m_logStream->flush();
@@ -191,9 +197,7 @@ Logger::LogLevel Logger::qtMsgTypeToLogLevel(QtMsgType type)
 
 void Logger::rotateLogFile()
 {
-    if (!m_logFile || !m_logStream) {
-        return;
-    }
+    if (!m_logFile || !m_logStream) return;
     
     m_logStream->flush();
     m_logFile->close();
