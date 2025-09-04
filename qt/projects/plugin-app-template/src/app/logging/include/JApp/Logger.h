@@ -49,6 +49,16 @@ public:
         int flushIntervalMs   = 1000;
     };
 
+    struct Log {
+        QDateTime timestamp;
+        LogLevel  level;
+        QString   file;
+        QString   function;
+        int       line;
+        QString   message;
+        QString   thread;
+    };
+
     static Logger& instance();
     
     void initialize(const LogConfig& config = LogConfig());
