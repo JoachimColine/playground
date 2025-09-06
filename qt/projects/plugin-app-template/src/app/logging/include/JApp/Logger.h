@@ -51,12 +51,12 @@ public:
 
     struct Log {
         QDateTime timestamp;
+        QString   category;
         LogLevel  level;
         QString   file;
         QString   function;
         int       line;
         QString   message;
-        QString   thread;
     };
 
     static Logger& instance();
@@ -77,8 +77,8 @@ private:
     
     void setupMessageHandler();
     void rotateLogFile();
-    QString formatLogMessage(LogLevel level, const QLoggingCategory& category, const QString& message, const QString& function, int line, const QString& file);
-    void log(LogLevel level, const QLoggingCategory& category, const QString& message, const QString& function = QString(), int line = -1, const QString& file = QString());
+    QString formatLog(const Log& log);
+    void handleLog(const Log& log);
     QString levelToString(LogLevel level);
     QString getCurrentLogFileName();
     void ensureLogDirectory();

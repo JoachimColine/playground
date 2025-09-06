@@ -116,22 +116,22 @@ void Logger::setLogDirectory(const QString& directory)
     ensureLogDirectory();
 }
 
-void Logger::log(LogLevel level, const QLoggingCategory& category, const QString& message, const QString& function, int line, const QString& file)
+void Logger::handleLog(const Log& log)
 {
     if (!m_initialized) return;
 
     // Check if we should log this level
-    if (level < m_config.minLevel) {
+    if (log.level < m_config.minLevel) {
         return;
     }
     
     QMutexLocker locker(&m_mutex);
     
-    QString formattedMessage = formatLogMessage(level, category, message, function, line, file);
+    QString formattedMessage = formatLog(log);
     
     // Console output
     if (hasFlag(m_config.target, OutputTarget::Console)) {
-        if (level >= LogLevel::Critical) {
+        if (log.level >= LogLevel::Critical) {
             std::cerr << formattedMessage.toStdString() << std::endl;
         } else {
             std::cout << formattedMessage.toStdString() << std::endl;
@@ -173,14 +173,18 @@ void Logger::messageHandler(QtMsgType type, const QMessageLogContext& context, c
     if (!s_instance) {
         return;
     }
+
+    Log log {
+        QDateTime::currentDateTime(),
+        context.category ? QString(context.category) : QString("?"),
+        qtMsgTypeToLogLevel(type),
+        context.file ? QString(context.file) : QString("?"),
+        context.function ? QString(context.function) : QString("?"),
+        context.line,
+        message
+    };
     
-    LogLevel level = qtMsgTypeToLogLevel(type);
-    QLoggingCategory category(context.category ? context.category : "qt");
-    
-    QString function = context.function ? QString(context.function) : QString();
-    QString file = context.file ? QString(context.file) : QString();
-    
-    s_instance->log(level, category, message, function, context.line, file);
+    s_instance->handleLog(log);
 }
 
 Logger::LogLevel Logger::qtMsgTypeToLogLevel(QtMsgType type)
@@ -229,54 +233,47 @@ void Logger::rotateLogFile()
     }
 }
 
-QString Logger::formatLogMessage(LogLevel level, const QLoggingCategory& category,
-                               const QString& message, const QString& function,
-                               int line, const QString& file)
+QString Logger::formatLog(const Log& log)
 {
     QStringList parts;
     
     // Timestamp
     if (m_config.enableTimestamp) {
-        parts << QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss.zzz");
+        parts << log.timestamp.toString("yyyy-MM-dd hh:mm:ss.zzz");
     }
     
     // Level
-    parts << QString("[%1]").arg(levelToString(level));
-    
-    // Category
-    if (m_config.enableCategory && category.categoryName() != nullptr) {
-        parts << QString("[%1]").arg(category.categoryName());
-    }
-    
-    // Thread ID
-    if (m_config.enableThreadId) {
-        parts << QString("[Thread:%1]").arg(reinterpret_cast<quintptr>(QThread::currentThread()), 0, 16);
-    }
+    parts << QString("%1").arg(levelToString(log.level));
     
     // Function and line
-    if (m_config.enableFunction && !function.isEmpty()) {
-        QString funcInfo = function;
-        if (m_config.enableLineNumber && line > 0) {
-            funcInfo += QString(":%1").arg(line);
+    if (m_config.enableFunction && !log.function.isEmpty()) {
+        QString funcInfo = log.function;
+        if (m_config.enableLineNumber && log.line > 0) {
+            funcInfo += QString(":%1").arg(log.line);
         }
-        parts << QString("[%1]").arg(funcInfo);
+        parts << QString("%1").arg(funcInfo);
     }
     
     // Message
-    parts << message;
+    parts << log.message;
+
+    // Thread ID
+    if (m_config.enableThreadId) {
+        parts << QString("%1").arg(reinterpret_cast<quintptr>(QThread::currentThread()), 0, 16);
+    }
     
-    return parts.join(" ");
+    return parts.join(" | ");
 }
 
 QString Logger::levelToString(LogLevel level)
 {
     switch (level) {
         case LogLevel::Debug:    return "DEBUG";
-        case LogLevel::Info:     return "INFO";
-        case LogLevel::Warning:  return "WARN";
+        case LogLevel::Info:     return "INFO ";
+        case LogLevel::Warning:  return "WARN ";
         case LogLevel::Critical: return "ERROR";
         case LogLevel::Fatal:    return "FATAL";
-        default:                 return "UNKNOWN";
+        default:                 return "?    ";
     }
 }
 
