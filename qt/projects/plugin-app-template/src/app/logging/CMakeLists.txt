@@ -13,7 +13,6 @@ target_link_libraries(logging PUBLIC
 target_include_directories(logging
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/include
-    INTERFACE
         ${CMAKE_CURRENT_SOURCE_DIR}/internal
 )
 
