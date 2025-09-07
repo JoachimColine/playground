@@ -1,3 +1,14 @@
+/*
+ * Code based on https://github.com/oKcerG/SortFilterProxyModel
+ * Copyright (c) 2021 Pierre-Yves Siret
+ * 
+ * Original code licensed under MIT License:
+ * https://github.com/oKcerG/SortFilterProxyModel/blob/master/LICENSE
+ * 
+ * Modifications copyright (c) 2025 JoachimColine
+ * Licensed under MIT License
+ */
+
 #ifndef QQMLSORTFILTERPROXYMODEL_H
 #define QQMLSORTFILTERPROXYMODEL_H
 
