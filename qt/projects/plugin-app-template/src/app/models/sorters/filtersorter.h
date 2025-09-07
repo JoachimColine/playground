@@ -1,5 +1,4 @@
-#ifndef FILTERSORTER_H
-#define FILTERSORTER_H
+#pragma once
 
 #include "sorter.h"
 #include "filters/filtercontainer.h"
@@ -29,5 +28,3 @@ private:
 };
 
 }
-
-#endif // FILTERSORTER_H

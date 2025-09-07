@@ -125,6 +125,13 @@ void Sorter::proxyModelCompleted(const QQmlSortFilterProxyModel& proxyModel)
     Q_UNUSED(proxyModel)
 }
 
+int Sorter::toInt(QPartialOrdering o)
+{
+    if (o == QPartialOrdering::Greater) return 1;
+    if (o == QPartialOrdering::Less) return -1;
+    return 0;
+}
+
 bool Sorter::lessThan(const QModelIndex &sourceLeft, const QModelIndex &sourceRight, const QQmlSortFilterProxyModel& proxyModel) const
 {
     Q_UNUSED(sourceLeft)

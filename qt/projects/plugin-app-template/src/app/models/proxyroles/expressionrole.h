@@ -1,5 +1,4 @@
-#ifndef EXPRESSIONROLE_H
-#define EXPRESSIONROLE_H
+#pragma once
 
 #include "singlerole.h"
 #include <QQmlScriptString>
@@ -35,5 +34,3 @@ private:
 };
 
 }
-
-#endif // EXPRESSIONROLE_H

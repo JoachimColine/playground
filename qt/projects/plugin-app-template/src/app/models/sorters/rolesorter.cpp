@@ -1,5 +1,6 @@
 #include "rolesorter.h"
 #include "qqmlsortfilterproxymodel.h"
+#include <JApp/Log.h>
 
 namespace qqsfpm {
 
@@ -56,14 +57,13 @@ QPair<QVariant, QVariant> RoleSorter::sourceData(const QModelIndex &sourceLeft, 
 
 int RoleSorter::compare(const QModelIndex &sourceLeft, const QModelIndex& sourceRight, const QQmlSortFilterProxyModel& proxyModel) const
 {
-    QPair<QVariant, QVariant> pair = sourceData(sourceLeft, sourceRight, proxyModel);
-    QVariant leftValue = pair.first;
-    QVariant rightValue = pair.second;
-    if (leftValue < rightValue)
-        return -1;
-    if (leftValue > rightValue)
-        return 1;
-    return 0;
+    const QPair<QVariant, QVariant> pair = sourceData(sourceLeft, sourceRight, proxyModel);
+    QPartialOrdering comparisonResult = QVariant::compare(pair.first, pair.second);
+    if (comparisonResult == QPartialOrdering::Unordered)
+    {
+        LOG_WARN() << "Failed to sort roles, comparison failed: " << pair;
+    }
+    return toInt(comparisonResult);
 }
 
 }

@@ -1,5 +1,4 @@
-#ifndef RANGEFILTER_H
-#define RANGEFILTER_H
+#pragma once
 
 #include "rolefilter.h"
 #include <QVariant>
@@ -44,5 +43,3 @@ private:
 };
 
 }
-
-#endif // RANGEFILTER_H

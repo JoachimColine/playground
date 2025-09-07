@@ -1,5 +1,4 @@
-#ifndef EXPRESSIONFILTER_H
-#define EXPRESSIONFILTER_H
+#pragma once
 
 #include "filter.h"
 #include <QQmlScriptString>
@@ -37,5 +36,3 @@ private:
 };
 
 }
-
-#endif // EXPRESSIONFILTER_H

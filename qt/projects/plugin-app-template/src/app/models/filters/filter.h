@@ -1,5 +1,4 @@
-#ifndef FILTER_H
-#define FILTER_H
+#pragma once
 
 #include <QObject>
 
@@ -42,5 +41,3 @@ private:
 };
 
 }
-
-#endif // FILTER_H

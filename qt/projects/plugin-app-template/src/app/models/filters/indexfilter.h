@@ -1,5 +1,4 @@
-#ifndef INDEXFILTER_H
-#define INDEXFILTER_H
+#pragma once
 
 #include "filter.h"
 #include <QVariant>
@@ -33,5 +32,3 @@ private:
 };
 
 }
-
-#endif // INDEXFILTER_H

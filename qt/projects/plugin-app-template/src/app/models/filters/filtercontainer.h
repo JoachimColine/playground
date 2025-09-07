@@ -1,5 +1,4 @@
-#ifndef FILTERCONTAINER_H
-#define FILTERCONTAINER_H
+#pragma once
 
 #include <QList>
 #include <QQmlListProperty>
@@ -31,8 +30,8 @@ private:
     virtual void onFiltersCleared() = 0;
 
     static void append_filter(QQmlListProperty<Filter>* list, Filter* filter);
-    static int count_filter(QQmlListProperty<Filter>* list);
-    static Filter* at_filter(QQmlListProperty<Filter>* list, int index);
+    static qsizetype count_filter(QQmlListProperty<Filter>* list);
+    static Filter* at_filter(QQmlListProperty<Filter>* list, qsizetype index);
     static void clear_filters(QQmlListProperty<Filter>* list);
 };
 
@@ -64,5 +63,3 @@ private:
 Q_DECLARE_INTERFACE(qqsfpm::FilterContainer, FilterContainer_iid)
 
 QML_DECLARE_TYPEINFO(qqsfpm::FilterContainerAttached, QML_HAS_ATTACHED_PROPERTIES)
-
-#endif // FILTERCONTAINER_H

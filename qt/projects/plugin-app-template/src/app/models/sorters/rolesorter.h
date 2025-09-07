@@ -1,5 +1,4 @@
-#ifndef ROLESORTER_H
-#define ROLESORTER_H
+#pragma once
 
 #include "sorter.h"
 
@@ -28,5 +27,3 @@ private:
 };
 
 }
-
-#endif // ROLESORTER_H

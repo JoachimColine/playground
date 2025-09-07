@@ -1,5 +1,4 @@
-#ifndef FILTERROLE_H
-#define FILTERROLE_H
+#pragma once
 
 #include "singlerole.h"
 #include "filters/filtercontainer.h"
@@ -25,5 +24,3 @@ private:
 };
 
 }
-
-#endif // FILTERROLE_H

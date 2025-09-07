@@ -1,5 +1,4 @@
-#ifndef PROXYROLECONTAINER_H
-#define PROXYROLECONTAINER_H
+#pragma once
 
 #include <QList>
 #include <QQmlListProperty>
@@ -29,8 +28,8 @@ private:
     virtual void onProxyRolesCleared() = 0;
 
     static void append_proxyRole(QQmlListProperty<ProxyRole>* list, ProxyRole* proxyRole);
-    static int count_proxyRole(QQmlListProperty<ProxyRole>* list);
-    static ProxyRole* at_proxyRole(QQmlListProperty<ProxyRole>* list, int index);
+    static qsizetype count_proxyRole(QQmlListProperty<ProxyRole>* list);
+    static ProxyRole* at_proxyRole(QQmlListProperty<ProxyRole>* list, qsizetype index);
     static void clear_proxyRoles(QQmlListProperty<ProxyRole>* list);
 };
 
@@ -38,5 +37,3 @@ private:
 
 #define ProxyRoleContainer_iid "fr.grecko.SortFilterProxyModel.ProxyRoleContainer"
 Q_DECLARE_INTERFACE(qqsfpm::ProxyRoleContainer, ProxyRoleContainer_iid)
-
-#endif // PROXYROLECONTAINER_H

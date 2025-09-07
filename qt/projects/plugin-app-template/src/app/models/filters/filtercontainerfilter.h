@@ -1,5 +1,4 @@
-#ifndef FILTERCONTAINERFILTER_H
-#define FILTERCONTAINERFILTER_H
+#pragma once
 
 #include "filter.h"
 #include "filtercontainer.h"
@@ -27,5 +26,3 @@ private:
 };
 
 }
-
-#endif // FILTERCONTAINERFILTER_H

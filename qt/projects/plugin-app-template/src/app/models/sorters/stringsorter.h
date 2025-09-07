@@ -1,5 +1,4 @@
-#ifndef STRINGSORTER_H
-#define STRINGSORTER_H
+#pragma once
 
 #include "rolesorter.h"
 #include <QCollator>
@@ -43,5 +42,3 @@ private:
 };
 
 }
-
-#endif // STRINGSORTER_H

@@ -1,5 +1,4 @@
-#ifndef SORTER_H
-#define SORTER_H
+#pragma once
 
 #include <QObject>
 
@@ -35,6 +34,8 @@ public:
 
     virtual void proxyModelCompleted(const QQmlSortFilterProxyModel& proxyModel);
 
+    static int toInt(QPartialOrdering o);
+
 Q_SIGNALS:
     void enabledChanged();
     void sortOrderChanged();
@@ -54,5 +55,3 @@ private:
 };
 
 }
-
-#endif // SORTER_H

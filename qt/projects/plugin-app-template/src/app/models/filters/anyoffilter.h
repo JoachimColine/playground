@@ -1,5 +1,4 @@
-#ifndef ANYOFFILTER_H
-#define ANYOFFILTER_H
+#pragma once
 
 #include "filtercontainerfilter.h"
 
@@ -16,5 +15,3 @@ protected:
 };
 
 }
-
-#endif // ANYOFFILTER_H

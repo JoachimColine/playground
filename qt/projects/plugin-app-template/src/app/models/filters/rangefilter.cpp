@@ -1,4 +1,5 @@
 #include "rangefilter.h"
+#include <JApp/Log.h>
 
 namespace qqsfpm {
 
@@ -45,6 +46,12 @@ QVariant RangeFilter::minimumValue() const
 
 void RangeFilter::setMinimumValue(QVariant minimumValue)
 {
+    if (!minimumValue.isValid())
+    {
+        LOG_WARN() << "Can't set minimum value, given value is invalid: " << minimumValue;
+        return;
+    }
+
     if (m_minimumValue == minimumValue)
         return;
 
@@ -94,6 +101,12 @@ QVariant RangeFilter::maximumValue() const
 
 void RangeFilter::setMaximumValue(QVariant maximumValue)
 {
+    if (!maximumValue.isValid())
+    {
+        LOG_WARN() << "Can't set maximum value, given value is invalid: " << maximumValue;
+        return;
+    }
+
     if (m_maximumValue == maximumValue)
         return;
 
@@ -128,12 +141,23 @@ void RangeFilter::setMaximumInclusive(bool maximumInclusive)
 
 bool RangeFilter::filterRow(const QModelIndex& sourceIndex, const QQmlSortFilterProxyModel& proxyModel) const
 {
-    QVariant value = sourceData(sourceIndex, proxyModel);
-    bool lessThanMin = m_minimumValue.isValid() &&
-            (m_minimumInclusive ? value < m_minimumValue : value <= m_minimumValue);
-    bool moreThanMax = m_maximumValue.isValid() &&
-            (m_maximumInclusive ? value > m_maximumValue : value >= m_maximumValue);
-    return !(lessThanMin || moreThanMax);
+    const QVariant value = sourceData(sourceIndex, proxyModel);
+    QPartialOrdering minComparisonResult = QVariant::compare(value, m_minimumValue);
+    QPartialOrdering maxComparisonResult = QVariant::compare(m_maximumValue, value);
+
+    if (minComparisonResult == QPartialOrdering::Unordered)
+    {
+        LOG_WARN() << "Failed to filter row with value " << value << ", comparison failed with minimum value " << m_minimumValue;
+    }
+    if (maxComparisonResult == QPartialOrdering::Unordered)
+    {
+        LOG_WARN() << "Failed to filter row with value " << value << ", comparison failed with minimum value " << m_minimumValue;
+    }
+
+    bool isLessThanMin = m_minimumInclusive ? (minComparisonResult == QPartialOrdering::Equivalent || minComparisonResult == QPartialOrdering::Less) : minComparisonResult == QPartialOrdering::Less;
+    bool isGreaterThanMax = m_maximumInclusive ? (maxComparisonResult == QPartialOrdering::Equivalent || minComparisonResult == QPartialOrdering::Greater) : minComparisonResult == QPartialOrdering::Greater;
+
+    return !(isLessThanMin || isGreaterThanMax);
 }
 
 }

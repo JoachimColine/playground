@@ -1,5 +1,4 @@
-#ifndef PROXYROLE_H
-#define PROXYROLE_H
+#pragma once
 
 #include <QObject>
 #include <QMutex>
@@ -36,5 +35,3 @@ private:
 };
 
 }
-
-#endif // PROXYROLE_H

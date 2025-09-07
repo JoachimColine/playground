@@ -1,5 +1,4 @@
-#ifndef JOINROLE_H
-#define JOINROLE_H
+#pragma once
 
 #include "singlerole.h"
 
@@ -32,5 +31,3 @@ private:
 };
 
 }
-
-#endif // JOINROLE_H

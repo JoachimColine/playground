@@ -1,5 +1,4 @@
-#ifndef SINGLEROLE_H
-#define SINGLEROLE_H
+#pragma once
 
 #include "proxyrole.h"
 
@@ -30,5 +29,3 @@ private:
 };
 
 }
-
-#endif // SINGLEROLE_H

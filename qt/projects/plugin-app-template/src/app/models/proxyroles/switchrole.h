@@ -1,5 +1,4 @@
-#ifndef SWITCHROLE_H
-#define SWITCHROLE_H
+#pragma once
 
 #include "singlerole.h"
 #include "filters/filtercontainer.h"
@@ -64,5 +63,3 @@ private:
 }
 
 QML_DECLARE_TYPEINFO(qqsfpm::SwitchRole, QML_HAS_ATTACHED_PROPERTIES)
-
-#endif // SWITCHROLE_H

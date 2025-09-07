@@ -1,5 +1,4 @@
-#ifndef SORTERSSORTERCONTAINER_H
-#define SORTERSSORTERCONTAINER_H
+#pragma once
 
 #include <QList>
 #include <QQmlListProperty>
@@ -31,8 +30,8 @@ private:
     virtual void onSortersCleared() = 0;
 
     static void append_sorter(QQmlListProperty<Sorter>* list, Sorter* sorter);
-    static int count_sorter(QQmlListProperty<Sorter>* list);
-    static Sorter* at_sorter(QQmlListProperty<Sorter>* list, int index);
+    static qsizetype count_sorter(QQmlListProperty<Sorter>* list);
+    static Sorter* at_sorter(QQmlListProperty<Sorter>* list, qsizetype index);
     static void clear_sorters(QQmlListProperty<Sorter>* list);
 };
 
@@ -64,5 +63,3 @@ private:
 Q_DECLARE_INTERFACE(qqsfpm::SorterContainer, SorterContainer_iid)
 
 QML_DECLARE_TYPEINFO(qqsfpm::SorterContainerAttached, QML_HAS_ATTACHED_PROPERTIES)
-
-#endif // SORTERSSORTERCONTAINER_H

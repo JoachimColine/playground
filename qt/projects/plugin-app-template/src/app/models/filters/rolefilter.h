@@ -1,5 +1,4 @@
-#ifndef ROLEFILTER_H
-#define ROLEFILTER_H
+#pragma once
 
 #include "filter.h"
 
@@ -27,5 +26,3 @@ private:
 };
 
 }
-
-#endif // ROLEFILTER_H

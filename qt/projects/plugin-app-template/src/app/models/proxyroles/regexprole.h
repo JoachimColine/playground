@@ -1,5 +1,4 @@
-#ifndef REGEXPROLE_H
-#define REGEXPROLE_H
+#pragma once
 
 #include "proxyrole.h"
 #include <QRegularExpression>
@@ -39,5 +38,3 @@ private:
 };
 
 }
-
-#endif // REGEXPROLE_H

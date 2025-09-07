@@ -1,5 +1,4 @@
-#ifndef ALLOFFILTER_H
-#define ALLOFFILTER_H
+#pragma once
 
 #include "filtercontainerfilter.h"
 
@@ -16,5 +15,3 @@ protected:
 };
 
 }
-
-#endif // ALLOFFILTER_H

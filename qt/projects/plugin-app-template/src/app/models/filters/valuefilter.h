@@ -1,5 +1,4 @@
-#ifndef VALUEFILTER_H
-#define VALUEFILTER_H
+#pragma once
 
 #include "rolefilter.h"
 #include <QVariant>
@@ -27,5 +26,3 @@ private:
 };
 
 }
-
-#endif // VALUEFILTER_H

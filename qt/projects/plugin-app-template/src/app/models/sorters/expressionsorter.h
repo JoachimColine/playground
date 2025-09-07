@@ -1,5 +1,4 @@
-#ifndef EXPRESSIONSORTER_H
-#define EXPRESSIONSORTER_H
+#pragma once
 
 #include "sorter.h"
 #include <QQmlScriptString>
@@ -39,5 +38,3 @@ private:
 };
 
 }
-
-#endif // EXPRESSIONSORTER_H
