@@ -70,6 +70,7 @@ public:
     void classBegin() override;
     void componentComplete() override;
 
+    QVariant sourceData(const QModelIndex& sourceIndex) const;
     QVariant sourceData(const QModelIndex& sourceIndex, const QString& roleName) const;
     QVariant sourceData(const QModelIndex& sourceIndex, int role) const;
 
@@ -134,6 +135,8 @@ private:
     void onProxyRoleAppended(ProxyRole *proxyRole) override;
     void onProxyRoleRemoved(ProxyRole *proxyRole) override;
     void onProxyRolesCleared() override;
+
+    QMetaMethod m_sourceGetMethod;
 
     bool m_delayed;
     QString m_filterRoleName;

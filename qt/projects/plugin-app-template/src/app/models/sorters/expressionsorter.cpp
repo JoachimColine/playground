@@ -83,17 +83,10 @@ bool evaluateBoolExpression(QQmlExpression& expression)
 int ExpressionSorter::compare(const QModelIndex& sourceLeft, const QModelIndex& sourceRight, const QQmlSortFilterProxyModel& proxyModel) const
 {
     if (!m_scriptString.isEmpty()) {
-        QVariantMap modelLeftMap, modelRightMap;
-        QHash<int, QByteArray> roles = proxyModel.roleNames();
-
         QQmlContext context(qmlContext(this));
 
-        for (auto it = roles.cbegin(); it != roles.cend(); ++it) {
-            modelLeftMap.insert(it.value(), proxyModel.sourceData(sourceLeft, it.key()));
-            modelRightMap.insert(it.value(), proxyModel.sourceData(sourceRight, it.key()));
-        }
-        modelLeftMap.insert("index", sourceLeft.row());
-        modelRightMap.insert("index", sourceRight.row());
+        QVariant modelLeftMap = proxyModel.sourceData(sourceLeft);
+        QVariant modelRightMap = proxyModel.sourceData(sourceRight);
 
         QQmlExpression expression(m_scriptString, &context);
 

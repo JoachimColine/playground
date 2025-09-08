@@ -4,6 +4,7 @@
 #include "filters/filter.h"
 #include "sorters/sorter.h"
 #include "proxyroles/proxyrole.h"
+#include <JApp/Log.h>
 
 namespace qqsfpm {
 
@@ -203,6 +204,44 @@ void QQmlSortFilterProxyModel::componentComplete()
     sort(0);
 }
 
+QVariant QQmlSortFilterProxyModel::sourceData(const QModelIndex &sourceIndex) const
+{
+    if (m_sourceGetMethod.isValid()) {
+        QVariant ret(m_sourceGetMethod.returnMetaType(), nullptr);
+        QGenericReturnArgument retArg(m_sourceGetMethod.typeName(), ret.data());
+
+        bool success = false;
+
+        if (m_sourceGetMethod.parameterType(0) == QMetaType::Int) {
+            success = m_sourceGetMethod.invoke(sourceModel(), retArg,
+                                               Q_ARG(int, sourceIndex.row()));
+        } else {
+            success = m_sourceGetMethod.invoke(sourceModel(), retArg,
+                                               Q_ARG(QModelIndex, sourceIndex));
+        }
+
+        if (success) {
+            if (ret.userType() == QMetaType::QVariant) {
+                ret = ret.value<QVariant>();
+            }
+
+            return ret;
+        } else {
+            LOG_WARN() << "Failed to invoke the source model's get() method.";
+        }
+    }
+
+    QVariantMap map;
+    const auto roles = roleNames();
+
+    for (auto it = roles.cbegin(); it != roles.cend(); ++it) {
+        map[it.value()] = sourceData(sourceIndex, it.key());
+    }
+    map["index"] = sourceIndex.row();
+
+    return map;
+}
+
 QVariant QQmlSortFilterProxyModel::sourceData(const QModelIndex& sourceIndex, const QString& roleName) const
 {
     int role = roleNames().key(roleName.toUtf8());
@@ -367,6 +406,14 @@ void QQmlSortFilterProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
     if (sourceModel && sourceModel->roleNames().isEmpty()) { // workaround for when a model has no roles and roles are added when the model is populated (ListModel)
         // QTBUG-57971
         connect(sourceModel, &QAbstractItemModel::rowsInserted, this, &QQmlSortFilterProxyModel::initRoles);
+    }
+    if (sourceModel) {
+        m_sourceGetMethod = sourceModel->metaObject()->method(sourceModel->metaObject()->indexOfMethod("get(QModelIndex)"));
+        if (!m_sourceGetMethod.isValid()) {
+            m_sourceGetMethod = sourceModel->metaObject()->method(sourceModel->metaObject()->indexOfMethod("get(int)"));
+        }
+    } else {
+        m_sourceGetMethod = {};
     }
     QSortFilterProxyModel::setSourceModel(sourceModel);
 }

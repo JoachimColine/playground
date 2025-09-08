@@ -54,19 +54,10 @@ void ExpressionFilter::proxyModelCompleted(const QQmlSortFilterProxyModel& proxy
 bool ExpressionFilter::filterRow(const QModelIndex& sourceIndex, const QQmlSortFilterProxyModel& proxyModel) const
 {
     if (!m_scriptString.isEmpty()) {
-        QVariantMap modelMap;
-        QHash<int, QByteArray> roles = proxyModel.roleNames();
-
+        const QVariant modelMap = proxyModel.sourceData(sourceIndex);
         QQmlContext context(qmlContext(this));
-        auto addToContext = [&] (const QString &name, const QVariant& value) {
-            context.setContextProperty(name, value);
-            modelMap.insert(name, value);
-        };
-
-        for (auto it = roles.cbegin(); it != roles.cend(); ++it)
-            addToContext(it.value(), proxyModel.sourceData(sourceIndex, it.key()));
-        addToContext("index", sourceIndex.row());
-
+        context.setContextProperty("index", sourceIndex.row());
+        context.setContextProperty("modelIndex", sourceIndex.row());
         context.setContextProperty("model", modelMap);
 
         QQmlExpression expression(m_scriptString, &context);
