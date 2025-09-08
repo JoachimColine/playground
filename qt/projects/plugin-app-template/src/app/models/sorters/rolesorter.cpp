@@ -2,7 +2,7 @@
 #include "qqmlsortfilterproxymodel.h"
 #include <JApp/Log.h>
 
-namespace qqsfpm {
+using namespace JApp::Models;
 
 /*!
     \qmltype RoleSorter
@@ -64,6 +64,4 @@ int RoleSorter::compare(const QModelIndex &sourceLeft, const QModelIndex& source
         LOG_WARN() << "Failed to sort roles, comparison failed: " << pair;
     }
     return toInt(comparisonResult);
-}
-
 }

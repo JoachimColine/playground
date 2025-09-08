@@ -3,7 +3,7 @@
 #include "filters/filter.h"
 #include <QtQml>
 
-namespace qqsfpm {
+using namespace JApp::Models;
 
 /*!
     \qmltype SwitchRole
@@ -163,6 +163,4 @@ void SwitchRole::onFilterRemoved(Filter *filter)
 void SwitchRole::onFiltersCleared()
 {
     invalidate();
-}
-
 }

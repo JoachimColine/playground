@@ -2,7 +2,7 @@
 #include "qqmlsortfilterproxymodel.h"
 #include <QtQml>
 
-namespace qqsfpm {
+using namespace JApp::Models;
 
 /*!
     \qmltype ExpressionFilter
@@ -111,6 +111,4 @@ void ExpressionFilter::updateExpression()
     connect(m_expression, &QQmlExpression::valueChanged, this, &ExpressionFilter::invalidate);
     m_expression->setNotifyOnValueChanged(true);
     m_expression->evaluate();
-}
-
 }

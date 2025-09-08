@@ -1,7 +1,7 @@
 #include "joinrole.h"
 #include "qqmlsortfilterproxymodel.h"
 
-namespace qqsfpm {
+using namespace JApp::Models;
 
 /*!
     \qmltype JoinRole
@@ -78,6 +78,4 @@ QVariant JoinRole::data(const QModelIndex &sourceIndex, const QQmlSortFilterProx
         result.chop(m_separator.length());
 
     return result;
-}
-
 }

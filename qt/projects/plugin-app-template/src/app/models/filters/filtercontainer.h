@@ -5,7 +5,7 @@
 #include <qqml.h>
 #include <QPointer>
 
-namespace qqsfpm {
+namespace JApp::Models {
 
 class Filter;
 class QQmlSortFilterProxyModel;
@@ -60,6 +60,6 @@ private:
 }
 
 #define FilterContainer_iid "fr.grecko.SortFilterProxyModel.FilterContainer"
-Q_DECLARE_INTERFACE(qqsfpm::FilterContainer, FilterContainer_iid)
+Q_DECLARE_INTERFACE(JApp::Models::FilterContainer, FilterContainer_iid)
 
-QML_DECLARE_TYPEINFO(qqsfpm::FilterContainerAttached, QML_HAS_ATTACHED_PROPERTIES)
+QML_DECLARE_TYPEINFO(JApp::Models::FilterContainerAttached, QML_HAS_ATTACHED_PROPERTIES)

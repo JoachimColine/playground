@@ -7,7 +7,7 @@
 #include <QQmlEngine>
 #include <QCoreApplication>
 
-namespace qqsfpm {
+using namespace JApp::Models;
 
 void registerSorterTypes() {
     qmlRegisterUncreatableType<Sorter>("SortFilterProxyModel", 0, 2, "Sorter", "Sorter is an abstract class");
@@ -19,5 +19,3 @@ void registerSorterTypes() {
 }
 
 Q_COREAPP_STARTUP_FUNCTION(registerSorterTypes)
-
-}

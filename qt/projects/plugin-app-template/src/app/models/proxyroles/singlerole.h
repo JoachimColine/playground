@@ -2,7 +2,7 @@
 
 #include "proxyrole.h"
 
-namespace qqsfpm {
+namespace JApp::Models {
 
 class SingleRole : public ProxyRole
 {

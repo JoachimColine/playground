@@ -7,7 +7,7 @@
 #include <QQmlEngine>
 #include <QCoreApplication>
 
-namespace qqsfpm {
+using namespace JApp::Models;
 
 void registerProxyRoleTypes() {
     qmlRegisterUncreatableType<ProxyRole>("SortFilterProxyModel", 0, 2, "ProxyRole", "ProxyRole is an abstract class");
@@ -19,5 +19,3 @@ void registerProxyRoleTypes() {
 }
 
 Q_COREAPP_STARTUP_FUNCTION(registerProxyRoleTypes)
-
-}

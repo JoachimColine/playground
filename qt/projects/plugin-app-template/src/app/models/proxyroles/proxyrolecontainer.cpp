@@ -1,6 +1,6 @@
 #include "proxyrolecontainer.h"
 
-namespace qqsfpm {
+using namespace JApp::Models;
 
 QList<ProxyRole*> ProxyRoleContainer::proxyRoles() const
 {
@@ -59,6 +59,4 @@ void ProxyRoleContainer::clear_proxyRoles(QQmlListProperty<ProxyRole> *list)
 {
     ProxyRoleContainer* that = reinterpret_cast<ProxyRoleContainer*>(list->object);
     that->clearProxyRoles();
-}
-
 }

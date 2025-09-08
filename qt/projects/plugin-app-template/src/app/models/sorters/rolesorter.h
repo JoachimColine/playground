@@ -2,7 +2,7 @@
 
 #include "sorter.h"
 
-namespace qqsfpm {
+namespace JApp::Models {
 
 class RoleSorter : public Sorter
 {

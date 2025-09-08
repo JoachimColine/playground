@@ -1,7 +1,7 @@
 #include "rangefilter.h"
 #include <JApp/Log.h>
 
-namespace qqsfpm {
+using namespace JApp::Models;
 
 /*!
     \qmltype RangeFilter
@@ -158,6 +158,4 @@ bool RangeFilter::filterRow(const QModelIndex& sourceIndex, const QQmlSortFilter
     bool isGreaterThanMax = m_maximumInclusive ? (maxComparisonResult == QPartialOrdering::Equivalent || minComparisonResult == QPartialOrdering::Greater) : minComparisonResult == QPartialOrdering::Greater;
 
     return !(isLessThanMin || isGreaterThanMax);
-}
-
 }

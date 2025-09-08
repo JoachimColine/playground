@@ -3,7 +3,7 @@
 #include "rolefilter.h"
 #include <QVariant>
 
-namespace qqsfpm {
+namespace JApp::Models {
 
 class ValueFilter : public RoleFilter {
     Q_OBJECT

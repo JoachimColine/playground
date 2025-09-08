@@ -2,7 +2,7 @@
 #include "qqmlsortfilterproxymodel.h"
 #include <QDebug>
 
-namespace qqsfpm {
+using namespace JApp::Models;
 
 /*!
     \qmltype RegExpRole
@@ -99,6 +99,4 @@ QVariant RegExpRole::data(const QModelIndex& sourceIndex, const QQmlSortFilterPr
     QString text = proxyModel.sourceData(sourceIndex, m_roleName).toString();
     QRegularExpressionMatch match = m_regularExpression.match(text);
     return match.hasMatch() ? (match.captured(name)) : QVariant{};
-}
-
 }

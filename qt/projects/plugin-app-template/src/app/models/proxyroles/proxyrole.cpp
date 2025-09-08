@@ -8,7 +8,7 @@
 #include "filters/filter.h"
 #include "qqmlsortfilterproxymodel.h"
 
-namespace qqsfpm {
+using namespace JApp::Models;
 
 /*!
     \qmltype ProxyRole
@@ -41,6 +41,4 @@ void ProxyRole::proxyModelCompleted(const QQmlSortFilterProxyModel &proxyModel)
 void ProxyRole::invalidate()
 {
     Q_EMIT invalidated();
-}
-
 }

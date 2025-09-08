@@ -9,7 +9,7 @@
 #include <QQmlEngine>
 #include <QCoreApplication>
 
-namespace qqsfpm {
+using namespace JApp::Models;
 
 void registerFiltersTypes() {
     qmlRegisterUncreatableType<Filter>("SortFilterProxyModel", 0, 2, "Filter", "Filter is an abstract class");
@@ -25,4 +25,3 @@ void registerFiltersTypes() {
 
 Q_COREAPP_STARTUP_FUNCTION(registerFiltersTypes)
 
-}

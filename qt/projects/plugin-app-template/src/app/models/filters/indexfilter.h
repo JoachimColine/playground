@@ -3,7 +3,7 @@
 #include "filter.h"
 #include <QVariant>
 
-namespace qqsfpm {
+namespace JApp::Models {
 
 class IndexFilter: public Filter {
     Q_OBJECT

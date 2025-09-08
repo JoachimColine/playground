@@ -6,7 +6,7 @@
 #include "proxyroles/proxyrole.h"
 #include <JApp/Log.h>
 
-namespace qqsfpm {
+using namespace JApp::Models;
 
 /*!
     \qmltype SortFilterProxyModel
@@ -607,5 +607,3 @@ void registerQQmlSortFilterProxyModelTypes() {
 }
 
 Q_COREAPP_STARTUP_FUNCTION(registerQQmlSortFilterProxyModelTypes)
-
-}

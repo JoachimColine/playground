@@ -1,6 +1,6 @@
 #include "valuefilter.h"
 
-namespace qqsfpm {
+using namespace JApp::Models;
 
 /*!
     \qmltype ValueFilter
@@ -52,6 +52,4 @@ void ValueFilter::setValue(const QVariant& value)
 bool ValueFilter::filterRow(const QModelIndex& sourceIndex, const QQmlSortFilterProxyModel& proxyModel) const
 {
     return !m_value.isValid() || m_value == sourceData(sourceIndex, proxyModel);
-}
-
 }

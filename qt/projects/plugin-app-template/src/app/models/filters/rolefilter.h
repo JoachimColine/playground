@@ -2,7 +2,7 @@
 
 #include "filter.h"
 
-namespace qqsfpm {
+namespace JApp::Models {
 
 class RoleFilter : public Filter
 {

@@ -5,7 +5,7 @@
 
 class QQmlExpression;
 
-namespace qqsfpm {
+namespace JApp::Models {
 
 class ExpressionRole : public SingleRole
 {

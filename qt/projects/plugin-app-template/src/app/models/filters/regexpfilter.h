@@ -3,7 +3,7 @@
 #include "rolefilter.h"
 #include <QRegularExpression>
 
-namespace qqsfpm {
+namespace JApp::Models {
 
 class RegExpFilter : public RoleFilter {
     Q_OBJECT

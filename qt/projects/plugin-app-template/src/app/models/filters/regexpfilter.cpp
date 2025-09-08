@@ -1,7 +1,7 @@
 #include "regexpfilter.h"
 #include <QVariant>
 
-namespace qqsfpm {
+using namespace JApp::Models;
 
 /*!
     \qmltype RegExpFilter
@@ -85,6 +85,4 @@ bool RegExpFilter::filterRow(const QModelIndex& sourceIndex, const QQmlSortFilte
 {
     const QString string = sourceData(sourceIndex, proxyModel).toString();
     return m_regExp.match(string).hasMatch();
-}
-
 }

@@ -1,7 +1,7 @@
 #include "filter.h"
 #include "qqmlsortfilterproxymodel.h"
 
-namespace qqsfpm {
+using namespace JApp::Models;
 
 /*!
     \qmltype Filter
@@ -80,6 +80,4 @@ void Filter::invalidate()
 {
     if (m_enabled)
         Q_EMIT invalidated();
-}
-
 }

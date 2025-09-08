@@ -1,6 +1,6 @@
 #include "alloffilter.h"
 
-namespace qqsfpm {
+using namespace JApp::Models;
 
 /*!
     \qmltype AllOf
@@ -23,6 +23,4 @@ bool AllOfFilter::filterRow(const QModelIndex& sourceIndex, const QQmlSortFilter
             return filter->filterAcceptsRow(sourceIndex, proxyModel);
         }
     );
-}
-
 }

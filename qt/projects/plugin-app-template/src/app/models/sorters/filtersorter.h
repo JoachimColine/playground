@@ -3,13 +3,13 @@
 #include "sorter.h"
 #include "filters/filtercontainer.h"
 
-namespace qqsfpm {
+namespace JApp::Models {
 
 class FilterSorter : public Sorter, public FilterContainer
 {
     Q_OBJECT
-    Q_INTERFACES(qqsfpm::FilterContainer)
-    Q_PROPERTY(QQmlListProperty<qqsfpm::Filter> filters READ filtersListProperty)
+    Q_INTERFACES(JApp::Models::FilterContainer)
+    Q_PROPERTY(QQmlListProperty<JApp::Models::Filter> filters READ filtersListProperty)
     Q_CLASSINFO("DefaultProperty", "filters")
 
 public:

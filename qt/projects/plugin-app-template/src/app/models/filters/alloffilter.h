@@ -2,7 +2,7 @@
 
 #include "filtercontainerfilter.h"
 
-namespace qqsfpm {
+namespace JApp::Models {
 
 class AllOfFilter : public FilterContainerFilter {
     Q_OBJECT

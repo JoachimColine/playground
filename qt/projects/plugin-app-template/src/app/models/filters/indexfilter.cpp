@@ -1,7 +1,7 @@
 #include "indexfilter.h"
 #include "qqmlsortfilterproxymodel.h"
 
-namespace qqsfpm {
+using namespace JApp::Models;
 
 /*!
     \qmltype IndexFilter
@@ -107,6 +107,4 @@ bool IndexFilter::filterRow(const QModelIndex& sourceIndex, const QQmlSortFilter
     }
 
     return true;
-}
-
 }

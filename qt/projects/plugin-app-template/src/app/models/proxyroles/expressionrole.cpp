@@ -2,7 +2,7 @@
 #include "qqmlsortfilterproxymodel.h"
 #include <QtQml>
 
-namespace qqsfpm {
+using namespace JApp::Models;
 
 /*!
     \qmltype ExpressionRole
@@ -123,6 +123,4 @@ void ExpressionRole::updateExpression()
     connect(m_expression, &QQmlExpression::valueChanged, this, &ExpressionRole::invalidate);
     m_expression->setNotifyOnValueChanged(true);
     m_expression->evaluate();
-}
-
 }

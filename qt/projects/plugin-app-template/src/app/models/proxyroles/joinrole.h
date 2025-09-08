@@ -2,7 +2,7 @@
 
 #include "singlerole.h"
 
-namespace qqsfpm {
+namespace JApp::Models {
 
 class JoinRole : public SingleRole
 {

@@ -3,7 +3,7 @@
 #include "rolesorter.h"
 #include <QCollator>
 
-namespace qqsfpm {
+namespace JApp::Models {
 
 class StringSorter : public RoleSorter
 {

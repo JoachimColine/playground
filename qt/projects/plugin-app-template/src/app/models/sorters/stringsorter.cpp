@@ -1,6 +1,6 @@
 #include "stringsorter.h"
 
-namespace qqsfpm {
+using namespace JApp::Models;
 
 /*!
     \qmltype StringSorter
@@ -112,6 +112,4 @@ int StringSorter::compare(const QModelIndex &sourceLeft, const QModelIndex &sour
     QString leftValue = pair.first.toString();
     QString rightValue = pair.second.toString();
     return m_collator.compare(leftValue, rightValue);
-}
-
 }

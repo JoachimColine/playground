@@ -1,7 +1,7 @@
 #include "rolefilter.h"
 #include "qqmlsortfilterproxymodel.h"
 
-namespace qqsfpm {
+using namespace JApp::Models;
 
 /*!
     \qmltype RoleFilter
@@ -40,6 +40,4 @@ void RoleFilter::setRoleName(const QString& roleName)
 QVariant RoleFilter::sourceData(const QModelIndex &sourceIndex, const QQmlSortFilterProxyModel& proxyModel) const
 {
     return proxyModel.sourceData(sourceIndex, m_roleName);
-}
-
 }

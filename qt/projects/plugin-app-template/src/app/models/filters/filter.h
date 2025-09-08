@@ -2,7 +2,7 @@
 
 #include <QObject>
 
-namespace qqsfpm {
+namespace JApp::Models {
 
 class QQmlSortFilterProxyModel;
 

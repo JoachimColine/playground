@@ -2,7 +2,7 @@
 #include "filter.h"
 #include <QtQml>
 
-namespace qqsfpm {
+using namespace JApp::Models;
 
 /*!
     \qmltype FilterContainer
@@ -121,6 +121,4 @@ void FilterContainerAttached::setContainer(QObject* object)
 FilterContainerAttached* FilterContainerAttached::qmlAttachedProperties(QObject* object)
 {
     return new FilterContainerAttached(object);
-}
-
 }

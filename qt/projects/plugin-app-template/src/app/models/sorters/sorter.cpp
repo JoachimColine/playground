@@ -1,7 +1,7 @@
 #include "sorter.h"
 #include "qqmlsortfilterproxymodel.h"
 
-namespace qqsfpm {
+using namespace JApp::Models;
 
 /*!
     \qmltype Sorter
@@ -144,6 +144,4 @@ void Sorter::invalidate()
 {
     if (m_enabled)
         Q_EMIT invalidated();
-}
-
 }

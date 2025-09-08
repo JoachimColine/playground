@@ -3,7 +3,7 @@
 #include <QObject>
 #include <QMutex>
 
-namespace qqsfpm {
+namespace JApp::Models {
 
 class QQmlSortFilterProxyModel;
 

@@ -3,7 +3,7 @@
 #include <QList>
 #include <QQmlListProperty>
 
-namespace qqsfpm {
+namespace JApp::Models {
 
 class ProxyRole;
 class QQmlSortFilterProxyModel;
@@ -36,4 +36,4 @@ private:
 }
 
 #define ProxyRoleContainer_iid "fr.grecko.SortFilterProxyModel.ProxyRoleContainer"
-Q_DECLARE_INTERFACE(qqsfpm::ProxyRoleContainer, ProxyRoleContainer_iid)
+Q_DECLARE_INTERFACE(JApp::Models::ProxyRoleContainer, ProxyRoleContainer_iid)

@@ -1,6 +1,6 @@
 #include "anyoffilter.h"
 
-namespace qqsfpm {
+using namespace JApp::Models;
 
 /*!
     \qmltype AnyOf
@@ -44,6 +44,4 @@ bool AnyOfFilter::filterRow(const QModelIndex& sourceIndex, const QQmlSortFilter
             return filter->enabled() && filter->filterAcceptsRow(sourceIndex, proxyModel);
         }
     );
-}
-
 }

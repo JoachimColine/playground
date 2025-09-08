@@ -3,7 +3,7 @@
 #include "proxyrole.h"
 #include <QRegularExpression>
 
-namespace qqsfpm {
+namespace JApp::Models {
 
 class RegExpRole : public ProxyRole
 {

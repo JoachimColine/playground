@@ -4,7 +4,7 @@
 #include "filters/filtercontainer.h"
 #include <QtQml>
 
-namespace qqsfpm {
+namespace JApp::Models {
 
 class SwitchRoleAttached : public QObject
 {
@@ -26,10 +26,10 @@ private:
 class SwitchRole : public SingleRole, public FilterContainer
 {
     Q_OBJECT
-    Q_INTERFACES(qqsfpm::FilterContainer)
+    Q_INTERFACES(JApp::Models::FilterContainer)
     Q_PROPERTY(QString defaultRoleName READ defaultRoleName WRITE setDefaultRoleName NOTIFY defaultRoleNameChanged)
     Q_PROPERTY(QVariant defaultValue READ defaultValue WRITE setDefaultValue NOTIFY defaultValueChanged)
-    Q_PROPERTY(QQmlListProperty<qqsfpm::Filter> filters READ filtersListProperty)
+    Q_PROPERTY(QQmlListProperty<JApp::Models::Filter> filters READ filtersListProperty)
     Q_CLASSINFO("DefaultProperty", "filters")
 
 public:
@@ -62,4 +62,4 @@ private:
 
 }
 
-QML_DECLARE_TYPEINFO(qqsfpm::SwitchRole, QML_HAS_ATTACHED_PROPERTIES)
+QML_DECLARE_TYPEINFO(JApp::Models::SwitchRole, QML_HAS_ATTACHED_PROPERTIES)

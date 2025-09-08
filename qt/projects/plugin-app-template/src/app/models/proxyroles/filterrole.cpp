@@ -1,7 +1,7 @@
 #include "filterrole.h"
 #include "filters/filter.h"
 
-namespace qqsfpm {
+using namespace JApp::Models;
 
 /*!
     \qmltype FilterRole
@@ -60,6 +60,4 @@ QVariant FilterRole::data(const QModelIndex& sourceIndex, const QQmlSortFilterPr
             return filter->filterAcceptsRow(sourceIndex, proxyModel);
         }
     );
-}
-
 }
