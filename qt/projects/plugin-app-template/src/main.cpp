@@ -14,6 +14,6 @@ int main(int argc, char *argv[])
     LOG_WARN() <<  "Warn from main!";
 
 
-    return 0;
+    return app.exec();
 }
 

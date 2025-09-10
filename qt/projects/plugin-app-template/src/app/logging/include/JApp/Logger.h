@@ -37,7 +37,7 @@ public:
         LogLevel minLevel     = LogLevel::Debug;
         OutputTarget target   = OutputTarget::Both;
         QString logDirectory;
-        QString logFilePrefix = "app";
+        QString logFilePrefix = "japp";
         qint64 maxFileSize    = 10 * 1024 * 1024; // 10MB
         int maxFileCount      = 5;
         bool enableTimestamp  = true;
@@ -46,7 +46,7 @@ public:
         bool enableLineNumber = true;
         bool enableThreadId   = true;
         bool autoFlush        = true;
-        int flushIntervalMs   = 1000;
+        int flushIntervalMs   = 500;
     };
 
     struct Log {
@@ -87,7 +87,7 @@ private:
     static LogLevel qtMsgTypeToLogLevel(QtMsgType type);
 
 private:
-    bool m_initialized = false;
+    bool m_initialized;
     LogConfig m_config;
     std::unique_ptr<QFile> m_logFile;
     std::unique_ptr<QTextStream> m_logStream;

@@ -13,8 +13,8 @@ Logger* Logger::s_instance = nullptr;
 Logger::Logger(QObject* parent)
     : QObject(parent)
     , m_flushTimer(new QTimer(this))
+    , m_initialized(false)
 {
-    connect(m_flushTimer, &QTimer::timeout, this, &Logger::flushLogs);
 }
 
 Logger::~Logger()
@@ -52,17 +52,17 @@ void Logger::initialize(const LogConfig& config)
                 m_logStream = std::make_unique<QTextStream>(m_logFile.get());
                 m_logStream->setEncoding(QStringConverter::Utf8);
             } else {
-                qWarning() << "Failed to open log file:" << m_logFile->fileName();
+                std::cout << "Failed to open log file:" << m_logFile->fileName().toStdString() << std::endl;
             }
         }
 
         // Setup Qt message handler
         setupMessageHandler();
 
-        // Start flush timer if auto-flush is enabled
-        if (m_config.autoFlush && m_config.flushIntervalMs > 0) {
-            m_flushTimer->start(m_config.flushIntervalMs);
-        }
+        m_flushTimer->setInterval(m_config.flushIntervalMs);
+        connect(m_flushTimer, &QTimer::timeout, this, &Logger::flushLogs);
+        m_flushTimer->start();
+
     } // Release mutex.
 
     m_initialized = true;
@@ -146,10 +146,6 @@ void Logger::handleLog(const Log& log)
         }
         
         *m_logStream << formattedMessage << Qt::endl;
-        
-        if (!m_config.autoFlush) {
-            m_logStream->flush();
-        }
     }
 }
 
@@ -244,6 +240,9 @@ QString Logger::formatLog(const Log& log)
     
     // Level
     parts << QString("%1").arg(levelToString(log.level));
+
+    // Category
+    parts << QString("%1").arg(log.category);
     
     // Function and line
     if (m_config.enableFunction && !log.function.isEmpty()) {
