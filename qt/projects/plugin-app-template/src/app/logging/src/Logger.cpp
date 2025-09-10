@@ -47,12 +47,12 @@ void Logger::initialize(const LogConfig& config)
 
         // Setup file logging if enabled
         if (hasFlag(m_config.target, OutputTarget::File)) {
-            m_logFile = std::make_unique<QFile>(getCurrentLogFileName());
+            m_logFile = std::make_unique<QFile>(createLogFilePath());
             if (m_logFile->open(QIODevice::WriteOnly | QIODevice::Append)) {
                 m_logStream = std::make_unique<QTextStream>(m_logFile.get());
                 m_logStream->setEncoding(QStringConverter::Utf8);
             } else {
-                std::cout << "Failed to open log file:" << m_logFile->fileName().toStdString() << std::endl;
+                std::cout << "Failed to open log file: " << m_logFile->fileName().toStdString() << std::endl;
             }
         }
 
@@ -201,28 +201,7 @@ void Logger::rotateLogFile()
     
     m_logStream->flush();
     m_logFile->close();
-    
-    QString baseFileName = m_config.logFilePrefix;
-    QString currentFile = getCurrentLogFileName();
-    
-    // Rotate existing files
-    for (int i = m_config.maxFileCount - 1; i >= 1; --i) {
-        QString oldFile = QString("%1/%2_%3.log").arg(m_config.logDirectory).arg(baseFileName).arg(i);
-        QString newFile = QString("%1/%2_%3.log").arg(m_config.logDirectory).arg(baseFileName).arg(i + 1);
-        
-        if (QFile::exists(oldFile)) {
-            QFile::remove(newFile); // Remove if exists
-            QFile::rename(oldFile, newFile);
-        }
-    }
-    
-    // Move current file to .1
-    QString rotatedFile = QString("%1/%2_1.log").arg(m_config.logDirectory).arg(baseFileName);
-    QFile::remove(rotatedFile);
-    QFile::rename(currentFile, rotatedFile);
-    
-    // Open new current file
-    m_logFile = std::make_unique<QFile>(currentFile);
+    m_logFile = std::make_unique<QFile>(createLogFilePath());
     if (m_logFile->open(QIODevice::WriteOnly | QIODevice::Append)) {
         m_logStream = std::make_unique<QTextStream>(m_logFile.get());
         m_logStream->setEncoding(QStringConverter::Utf8);
@@ -276,9 +255,12 @@ QString Logger::levelToString(LogLevel level)
     }
 }
 
-QString Logger::getCurrentLogFileName()
+QString Logger::createLogFilePath()
 {
-    return QString("%1/%2.log").arg(m_config.logDirectory).arg(m_config.logFilePrefix);
+    return QString("%1/%2_%3.log")
+        .arg(m_config.logDirectory)
+        .arg(m_config.logFilePrefix)
+        .arg(QDateTime::currentDateTime().toString("yyyy-MM-dd_hh'h'mm'm'ss's'"));
 }
 
 void Logger::ensureLogDirectory()

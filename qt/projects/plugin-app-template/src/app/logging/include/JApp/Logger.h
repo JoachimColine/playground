@@ -45,8 +45,7 @@ public:
         bool enableFunction   = true;
         bool enableLineNumber = true;
         bool enableThreadId   = true;
-        bool autoFlush        = true;
-        int flushIntervalMs   = 500;
+        int flushIntervalMs   = 1000;
     };
 
     struct Log {
@@ -80,7 +79,7 @@ private:
     QString formatLog(const Log& log);
     void handleLog(const Log& log);
     QString levelToString(LogLevel level);
-    QString getCurrentLogFileName();
+    QString createLogFilePath();
     void ensureLogDirectory();
 
     static void messageHandler(QtMsgType type, const QMessageLogContext& context, const QString& message);
